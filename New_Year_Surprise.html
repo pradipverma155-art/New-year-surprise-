@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Year Surprise</title>
+
+<style>
+:root {
+    --bg-color: #1a0b2e;
+    --accent-pink: #ff4d8d;
+    --text-white: #ffffff;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(180deg, #1a0b2e 0%, #31115e 100%);
+    color: var(--text-white);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    animation: fadeIn 0.5s ease;
+}
+
+.active { display: flex; }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Screen 1 */
+.heart-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-top: 30px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.heart-icon {
+    font-size: 80px;
+    line-height: 120px;
+    color: var(--accent-pink);
+}
+
+.progress-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+}
+
+/* Screen 2 */
+.distraction-box {
+    position: relative;
+    height: 350px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.card {
+    position: absolute;
+    width: 130px;
+    height: 170px;
+    background: white;
+    border-radius: 12px;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    cursor: pointer;
+    transition: transform 0.4s, opacity 0.3s;
+    user-select: none;
+}
+
+.gift-reveal {
+    font-size: 80px;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pop 0.5s ease;
+    cursor: pointer;
+}
+
+@keyframes pop {
+    from { transform: translate(-50%, -50%) scale(0); }
+    to { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Screen 3 */
+.ticket {
+    border: 2px dashed #ffd700;
+    padding: 30px;
+    border-radius: 15px;
+    background: rgba(255, 215, 0, 0.05);
+}
+
+/* Screen 5 */
+.greeting-card {
+    background: #fff;
+    color: #444;
+    padding: 30px;
+    border-radius: 20px;
+    width: 85%;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    line-height: 1.6;
+}
+
+button {
+    background: var(--accent-pink);
+    border: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    color: white;
+    font-weight: bold;
+    margin-top: 25px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+<div id="screen1" class="screen active">
+    <h2>A little surprise for you</h2>
+    <p>Before this year begins</p>
+
+    <div class="heart-container" id="heartBtn">
+        <svg class="progress-ring" width="120" height="120">
+            <circle id="progressCircle"
+                stroke="#ff4d8d"
+                stroke-width="8"
+                fill="transparent"
+                r="50"
+                cx="60"
+                cy="60"
+                stroke-dasharray="314"
+                stroke-dashoffset="314"/>
+        </svg>
+        <div class="heart-icon">❤️</div>
+    </div>
+
+    <p style="opacity:0.8;">Tap and hold</p>
+</div>
+
+<div id="screen2" class="screen">
+    <h2>Something is waiting for you</h2>
+    <p>Move the little distractions aside</p>
+
+    <div class="distraction-box">
+        <div class="card" style="top:10px; left:20px; background:#ffeb3b;">Bad Days</div>
+        <div class="card" style="top:30px; right:20px; background:#8bc34a;">Stress</div>
+        <div class="card" style="top:100px; left:50%; margin-left:-65px; background:#03a9f4;">Overthinking</div>
+        <div class="card" style="bottom:40px; left:25px; background:#ff9800;">Distance</div>
+        <div class="card" style="bottom:20px; right:25px; background:#e91e63; color:white;">Loneliness</div>
+
+        <div id="giftIcon" class="gift-reveal" onclick="nextScreen(3)">🎁</div>
+    </div>
+</div>
+
+<div id="screen3" class="screen">
+    <div class="ticket">
+        <h1 style="color:#ffd700;">GOLDEN TICKET</h1>
+        <p style="letter-spacing:2px;">VALID FOR EVERY DAY AHEAD</p>
+        <h3>"Unlimited Love & Smiles"</h3>
+        <p style="opacity:0.7;">No expiration date</p>
+    </div>
+
+    <button onclick="nextScreen(5)">CLAIM TICKET</button>
+</div>
+
+<div id="screen5" class="screen">
+    <div class="greeting-card">
+        <h2 style="color:var(--accent-pink);">For my Cutiepie :)</h2>
+        <p>I hope this year brings you calm mornings, peaceful nights, and little moments that make you smile.</p>
+        <p>No matter what this year holds, I hope you always feel supported and valued.</p>
+        <p><strong>Happy New Year 2026! 🥂</strong></p>
+    </div>
+</div>
+
+<script>
+function nextScreen(num) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen' + num).classList.add('active');
+}
+
+const heartBtn = document.getElementById('heartBtn');
+const circle = document.getElementById('progressCircle');
+let progress = 314;
+let timer = null;
+let completed = false;
+
+function startHold(e) {
+    e.preventDefault();
+    if (completed || timer) return;
+
+    timer = setInterval(() => {
+        progress -= 4;
+        circle.style.strokeDashoffset = progress;
+        if (progress <= 0) {
+            completed = true;
+            clearInterval(timer);
+            nextScreen(2);
+        }
+    }, 20);
+}
+
+function endHold() {
+    if (completed) return;
+    clearInterval(timer);
+    timer = null;
+    progress = 314;
+    circle.style.strokeDashoffset = progress;
+}
+
+heartBtn.addEventListener('mousedown', startHold);
+heartBtn.addEventListener('mouseup', endHold);
+heartBtn.addEventListener('touchstart', startHold);
+heartBtn.addEventListener('touchend', endHold);
+
+const cards = document.querySelectorAll('.card');
+let removed = 0;
+
+cards.forEach(card => {
+    card.onclick = () => {
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(-150px) rotate(25deg) scale(0.5)';
+        card.style.pointerEvents = 'none';
+        removed++;
+
+        if (removed === cards.length) {
+            setTimeout(() => {
+                document.getElementById('giftIcon').style.display = 'block';
+            }, 300);
+        }
+    };
+});
+</script>
+</body>
+</html>
